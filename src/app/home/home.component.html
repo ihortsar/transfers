@@ -1,0 +1,16 @@
+<div class="wrapper">
+    <header>
+        <span>{{us.loggedUser}}</span>
+    </header>
+    <mat-drawer-container class="example-container">
+        <mat-drawer mode="side" opened>
+            <ng-container *ngFor="let item of menuButtons">
+                <button (click)="ll.loadForm(item) " mat-button>{{item}}</button>
+            </ng-container>
+        </mat-drawer>
+        <mat-drawer-content>
+            <ng-template #formComponent></ng-template>
+        </mat-drawer-content>
+    </mat-drawer-container>
+
+</div>

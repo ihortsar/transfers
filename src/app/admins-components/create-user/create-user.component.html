@@ -1,0 +1,74 @@
+<div class="wrapper">
+    <form [formGroup]="addUserForm" (submit)="createUser();" *ngIf="!userCreated">
+
+        <h1>Add a user</h1>
+        <div class="input-div">
+            <mat-form-field class="example-full-width">
+                <input matInput formControlName="firstName">
+                <mat-label>First name</mat-label>
+            </mat-form-field>
+        </div>
+        <div class="input-div">
+            <mat-form-field class="example-full-width">
+                <input matInput formControlName="lastName" type="text">
+                <mat-label>Last name</mat-label>
+            </mat-form-field>
+        </div>
+        <div class="input-div">
+            <mat-form-field class="example-full-width">
+                <mat-label>Birthdate</mat-label>
+                <input formControlName="birthday" [max]="maxDate" matInput [matDatepicker]="picker">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+
+        <div class="input-div">
+            <div class="errors" *ngIf="passErrors.length > 0">
+                <span *ngFor="let er of mailErrors">
+                    {{ er }}
+                </span>
+            </div>
+            <mat-form-field class="example-full-width">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" type="email">
+                <mat-error *ngIf="addUserForm.get('email')?.hasError('required')">
+                    Enter an email adress.
+                </mat-error>
+                <mat-error *ngIf="addUserForm.get('email')?.hasError('email')">
+                    The email is not valid.
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="input-div">
+            <div class="errors" *ngIf="passErrors.length > 0">
+                <span *ngFor="let er of passErrors">
+                    {{ er }}
+                </span>
+            </div>
+        </div>
+
+        <mat-form-field>
+            <mat-label>Select a role</mat-label>
+            <mat-select [(value)]="selected">
+                <mat-option value="Admin">Admin</mat-option>
+                <mat-option value="Manager">Manager</mat-option>
+                <mat-option value="Reviewer">Reviewer</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <section class="example-section status">
+            <label class="example-margin">Status</label>
+            <mat-radio-group formControlName="status">
+                <mat-radio-button class="example-margin" [value]=true>Activate</mat-radio-button>
+                <mat-radio-button class="example-margin" [value]=false>Deactivate</mat-radio-button>
+            </mat-radio-group>
+        </section>
+
+        <button type="submit" mat-button>Add</button>
+    </form>
+
+    <div class="popUp" *ngIf="userCreated">User {{user?.firstName}} {{user?.lastName}} successfully created</div>
+</div>

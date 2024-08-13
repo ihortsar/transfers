@@ -1,0 +1,54 @@
+.wrapper {
+    background: rgb(185, 184, 184);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(2, 2, 2);
+}
+
+.signinForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px 60px;
+    background-color: white;
+
+    h1 {
+        text-align: center;
+    }
+
+    button {
+        background-color: rgb(127, 19, 68) !important;
+        cursor: pointer;
+    }
+}
+
+
+.instruction {
+    margin-bottom: -50px;
+    display: block;
+    width: 80%;
+}
+
+.login {
+    position: absolute;
+    top: 30px;
+    right: 2%
+}
+
+mat-error {
+
+    color: red;
+}
+
+mat-label {
+    color: gray;
+}
+
+
+
+.example-full-width {
+    width: 100%;
+}

@@ -1,0 +1,36 @@
+.allUsers {
+    color: black;
+    gap: 20px;
+    padding: 20px;
+    font-size: 20px;
+
+    .rightColumn {
+        display: flex;
+        align-items: center;
+        gap: 60px;
+
+        section {
+            margin-top: -15px;
+        }
+    }
+
+    .usersInfo {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-right: 30px;
+
+        .mail {
+            color: aliceblue;
+        }
+
+        .usersName {
+            margin-top: -27px;
+            padding-left: 40px;
+        }
+
+        span {
+            margin-right: 5px;
+        }
+    }
+}

@@ -1,0 +1,33 @@
+<div class="wrapper">
+    <div class="allUsers" *ngFor="let user of us.users let i=index">
+        <div class="usersInfo">
+            <div class="usersName">
+                <div>
+                    <span>{{user.firstName}}</span>
+                    <span>{{user.lastName}}</span>
+                </div>
+                <span class="mail">{{user.email}}</span>
+            </div>
+
+            <div class="rightColumn">
+                <section class="example-section">
+                    <label class="example-margin">Status</label>
+                    <mat-radio-group>
+                        <mat-radio-button [checked]="user.active" class="example-margin"
+                            value="true">Activate</mat-radio-button>
+                        <mat-radio-button [checked]="!user.active" class="example-margin"
+                            value="false">Deactivate</mat-radio-button>
+                    </mat-radio-group>
+                </section>
+
+                <mat-form-field>
+                    <mat-select [(value)]="selected[i]">
+                        <mat-option value="Admin">Admin</mat-option>
+                        <mat-option value="Manager">Manager</mat-option>
+                        <mat-option value="Reviewer">Reviewer</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</div>
