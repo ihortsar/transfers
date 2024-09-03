@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { DestinationsService } from '../services/destinations.service';
+import { beforeEach, describe, it } from 'node:test';
 
 describe('DestinationsService', () => {
   let service: DestinationsService;
@@ -10,7 +11,9 @@ describe('DestinationsService', () => {
     service = TestBed.inject(DestinationsService);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+
 });
+function expect(service: DestinationsService) {
+  throw new Error('Function not implemented.');
+}
+

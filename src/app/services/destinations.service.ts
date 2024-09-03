@@ -18,8 +18,9 @@ export class DestinationsService {
 
   async calculateDistance() {
     try {
-      const response = await fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${encodeURIComponent(this.departurePlace)}&destinations=${encodeURIComponent(this.arrivalPlace)}&key=${this.googleMapApi}`);
+      const response = await fetch(`http://localhost/distance_matrix_proxy.php?departure_place=${encodeURIComponent(this.departurePlace)}&arrival_place=${encodeURIComponent(this.arrivalPlace)}`);
       const data = await response.json();
+
       if (data.rows[0] && data.rows[0].elements[0]) {
         const distanceAsText = data.rows[0].elements[0].distance.text;
         this.duration = data.rows[0].elements[0].duration.text;
@@ -31,6 +32,7 @@ export class DestinationsService {
       console.error('Error fetching distance data:', error);
     }
   }
+
 
 
   onDepartureChange(event: MatSelectChange) {
