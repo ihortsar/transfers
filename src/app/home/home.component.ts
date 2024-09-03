@@ -1,70 +1,75 @@
-import { AfterViewInit, Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
-import { MatMenuModule } from '@angular/material/menu';
+import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { UserService } from '../services/user.service';
-import { NgFor } from '@angular/common';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { LazyLoadService } from '../services/lazy-load.service';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
+import { HttpClientModule } from '@angular/common/http';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { DestinationsService } from '../services/destinations.service';
+import { Transfer } from '../../classes/transfer.class.';
+import { TransferService } from '../services/transfer.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatSidenavModule, MatMenuModule, MatButtonModule, NgFor],
+  imports: [MatButtonModule, FormsModule, NgIf, ReactiveFormsModule,
+    MatFormFieldModule, MatInputModule, NgFor, HttpClientModule, MatSelectModule, MatDatepickerModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrl: './home.component.scss',
+  providers: [provideNativeDateAdapter()]
+
 })
-export class HomeComponent implements OnInit, AfterViewInit {
-  menuButtons: string[] = []
-  @ViewChild('formComponent', { read: ViewContainerRef }) formComponent!: ViewContainerRef;
+export class HomeComponent implements OnInit {
+  minDate: Date = new Date();
+  transferForm: FormGroup
+  addresses: any[] = []
+  seatNumbers: number[] = [1, 2, 3, 4, 5, 6, 7];
 
-
-  constructor(public us: UserService, public ll: LazyLoadService) { }
-
-  /**
-   * Lifecycle hook that is called when the component is initialized.
-   * Calls methods to get the logged-in user and configure menu options based on user role.
-   */
-  ngOnInit(): void {
-    this.getUser()
-    this.menuOptions()
+  constructor(private router: Router, public us: UserService, private fb: FormBuilder, public ds: DestinationsService, public ts: TransferService) {
+    this.transferForm = this.fb.group({
+      departurePlace: ['', Validators.required],
+      arrivalPlace: ['', Validators.required],
+      pickupDate: ['', Validators.required],
+      pickupTime: ['', Validators.required],
+      numberOfPeople: ['', [Validators.required, Validators.min(1), Validators.max(7)]]
+    });
   }
 
 
-  /**
-  * Lifecycle hook that is called after Angular has fully initialized all of its data-bound properties.
-  * Used here to set up the form component container with a custom service.
-  */
-  ngAfterViewInit() {
-    this.ll.setContainer(this.formComponent);
+  async ngOnInit() {
+    await this.us.loadData('users');
+    this.addresses = await this.us.loadData('addresses');
+    this.ds.drivers = await this.us.loadData('drivers')
   }
 
 
-  /**
-   * Retrieves the logged-in user's role from local storage and assigns it to the `loggedUser` property.
-   */
-  getUser() {
-    this.us.loggedUser = localStorage.getItem('loggedUser')
-  }
-
-
-  /**
-   * Configures menu options based on the role of the logged-in user.
-   * Updates the `menuButtons` array with different options for manager, admin, and reviewer roles.
-   */
-  menuOptions() {
-    if (this.us.loggedUser === 'manager') {
-      this.menuButtons.push('Create new booking',
-        'List existing bookings and view details',
-        'Cancel existing booking'
-      )
-    } else if (this.us.loggedUser === 'admin') {
-      this.menuButtons.push('Create a user', 'View all users', 'Other options of reviewer and manager',)
-    } else if (this.us.loggedUser === 'reviewer') {
-      this.menuButtons.push('Manage your bookings')
+  async onSubmit() {
+    if (this.transferForm.valid && this.ds.checkDepartureAndArrival()) {
+      await this.ds.calculateDistance()
+      this.ts.transfer = new Transfer({
+        route: this.transferForm.value.departurePlace + '->' + this.transferForm.value.arrivalPlace,
+        date: this.transformedDate(),
+        pickup_time: this.transferForm.value.pickupTime,
+        number_of_passengers: this.transferForm.value.numberOfPeople,
+        drivers_id: this.ds.driversSortedByCity[0].id
+      })
+      this.us.setDataInLocalStorage('currentTransfer', this.ts.transfer)
+      this.router.navigate(['/choose-vehicle']);
+    } else {
+      console.log('Form is invalid');
     }
   }
 
 
-
-
+  transformedDate() {
+    const datePipe = new DatePipe('en-US');
+    const date = this.transferForm.value.pickupDate
+    const formattedDate = datePipe.transform(date, 'yyyy-MM-dd');
+    return formattedDate
+  }
 }

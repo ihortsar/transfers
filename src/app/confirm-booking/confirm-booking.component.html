@@ -1,0 +1,53 @@
+<div class="wrapper">
+    <div *ngIf="transfer.route" class="transferInfo">
+        <h1>Transfer details:</h1>
+        <div class=details>
+            <div class="subDetails">
+                <div>
+                    <span>Von:</span>
+                    <div>{{transfer.route.split('->')[0]}} </div>
+                </div>
+                <div>
+                    <span>Nach:</span>
+                    <div>{{transfer.route.split('->')[1]}} </div>
+                </div>
+                <div>
+                    <span>Abholung:</span>
+                    <div>{{transfer.date}} </div>
+                </div>
+                <div>
+                    <span>Um:</span>
+                    <div>{{transfer.pick_up_time}} </div>
+                </div>
+            </div>
+            <div class="subDetails">
+                <div>
+                    <span>Personenanzahl:</span>
+                    <div>{{transfer.number_of_passengers}} </div>
+                </div>
+                <div>
+                    <span>Preis:</span>
+                    <div>{{transfer.fare}} €</div>
+                </div>
+                <div class="autoInfo">
+                    <span>Auto:</span>
+                    <p *ngIf="transfer.vehicle_class==='1'">Economy pkw</p>
+                    <p *ngIf="transfer.vehicle_class==='2'">Economy van</p>
+                    <p *ngIf="transfer.vehicle_class==='3'">Business pkw</p>
+                    <p *ngIf="transfer.vehicle_class==='4'">Business van</p>
+                    <img *ngIf="transfer.vehicle_class==='1'" src="../../assets/img/economy_pkw.png">
+                    <img *ngIf="transfer.vehicle_class==='2'" src="../../assets/img/economy_van.png">
+                    <img *ngIf="transfer.vehicle_class==='3'" src="../../assets/img/business_pkw.png">
+                    <img *ngIf="transfer.vehicle_class==='4'" src="../../assets/img/business_van.png">
+                </div>
+            </div>
+        </div>
+        <button *ngIf="us.customerInfo" mat-button (click)="sendTransferToDB()">Bestätigen</button>
+        <button *ngIf="!checkForUserType()&& !us.customerInfo" (click)="openSignUp()" mat-button>
+            Mitarbeiter zum Transfer hinzufügen
+        </button>
+    </div>
+</div>
+<div *ngIf="!checkForUserType()" class="signupWrapper">
+    <app-signup *ngIf="signUp" (signUpComplete)="onSignUpComplete()" [formName]="formName"></app-signup>
+</div>

@@ -1,30 +1,58 @@
 .wrapper {
-    background: rgb(185, 184, 184);
-    height: 100%;
-    overflow: hidden;
+    background: rgb(255, 255, 255);
+    overflow-x: hidden;
 
-    header {
+    .transferForm {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        background-color: rgb(26 25 25 / 68%);
         padding: 10px 20px;
-        color: rgb(0, 0, 0);
-        border-bottom: 1px solid white;
-        font-size: 22px;
+        position: absolute;
+        bottom: 6%;
+        left: 50%;
+        transform: translateX(-50%);
+        min-width: 80%;
+
+
+
+        .formSubdiv {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+            .addressInputWidth {
+                width: 50%;
+
+            }
+
+            div {
+                display: flex;
+                flex-direction: column;
+                color: white;
+            }
+        }
     }
 
-    button {
-        color: black;
+
+    .accept-form {
+        padding: 30px 60px;
+        color: white;
+        background-color: #CE5399;
     }
 }
 
-.example-container {
-    width: auto;
-    height: 100vh;
-    border: 1px solid #555;
-    background: rgb(185, 184, 184);
+.invis {
+    visibility: hidden;
 }
 
-mat-drawer {
-    min-width: 15%;
+.error {
+    align-self: center;
+    color: red;
+    margin-bottom: 10px;
+}
+
+.destination {
+    display: flex;
+    flex-direction: column;
 }

@@ -1,0 +1,72 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    background-color: #EEEEEE;
+    min-height: calc(100vh - 56px);
+    align-items: center;
+    overflow-y: hidden;
+
+    h1 {
+        align-self: center;
+    }
+
+    .transferInfo {
+        background-color: white;
+        gap: 30px;
+        display: flex;
+        flex-direction: column;
+        height: fit-content;
+        padding: 20px 50px;
+        width: 60%;
+
+        .details {
+            display: flex;
+            gap: 40px;
+            justify-content: space-evenly;
+
+            .subdetails {
+                display: flex;
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            span {
+                color: gray;
+            }
+
+            .autoInfo {
+                display: flex;
+                flex-direction: column;
+
+                img {
+                    max-width: 210px;
+                    height: auto;
+                }
+            }
+        }
+    }
+}
+
+button {
+    background-color: rgb(127, 19, 68) !important;
+    cursor: pointer;
+    color: white !important;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.subDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.signupWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    border: 1px solid rgb(166, 166, 167);
+    background-color: white;
+}

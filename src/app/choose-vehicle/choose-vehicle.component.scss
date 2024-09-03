@@ -1,0 +1,84 @@
+.wrapper {
+    display: flex;
+    background: #EEEEEE;
+    min-height: 100vh;
+    padding: 20px 60px;
+    gap: 20px;
+
+    .info {
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+        background-color: white;
+        gap: 50px;
+        padding: 30px;
+        border: 1px solid rgb(166, 166, 167);
+
+        span {
+            color: gray;
+        }
+    }
+
+    .vehicles {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        align-items: center;
+        background-color: white;
+        gap: 70px;
+        padding: 30px;
+        border: 1px solid rgb(166, 166, 167);
+
+        .autoInfo {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            border-bottom: 1px dotted rgb(166, 166, 167);
+            padding: 20px 0;
+
+            .subInfo {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+
+                img {
+                    margin-right: 3px;
+                }
+            }
+
+            .priceDiv {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                .price {
+                    color: #9D2067;
+                    font-size: 20px;
+                }
+
+                button {
+                    background-color: rgb(86, 66, 241);
+                    color: white;
+                }
+            }
+        }
+    }
+}
+
+.authApps {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: white;
+    height: fit-content;
+    padding-bottom: 25px;
+
+    button {
+        margin-top: 20px;
+        background-color: rgb(127, 19, 68) !important;
+        cursor: pointer;
+        color: white;
+        cursor: pointer;
+    }
+}

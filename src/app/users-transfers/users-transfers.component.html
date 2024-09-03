@@ -1,0 +1,27 @@
+<div class="wrapper">
+    <div *ngIf="usersTransfers&&usersTransfers.length>0">
+        <h1>Deine Bookings:</h1>
+        <div class="bookingSection" *ngFor="let transfer of usersTransfers">
+            <div>
+                <span>Für:</span>
+                <div>{{transfer.customer_name}} </div>
+            </div>
+            <div>
+                <span>Von:</span>
+                <div>{{transfer.route.split('->')[0]}} </div>
+            </div>
+            <div>
+                <span>Nach:</span>
+                <div>{{transfer.route.split('->')[1]}} </div>
+            </div>
+            <div>
+                <span>Am:</span>
+                <div>{{transfer.date}} </div>
+            </div>
+            <div>
+                <span>Um:</span>
+                <div>{{ formatTime(transfer.pick_up_time) }} </div>
+            </div>
+        </div>
+    </div>
+</div>

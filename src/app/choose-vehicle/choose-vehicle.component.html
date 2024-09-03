@@ -1,0 +1,57 @@
+<div class="wrapper">
+    <div *ngIf="ts.transfer.route" class="info">
+        <h1>Transfer details:</h1>
+        <div>
+            <span>Von:</span>
+            <div>{{ts.transfer.route.split('->')[0]}} </div>
+        </div>
+        <div>
+            <span>Nach:</span>
+            <div>{{ts.transfer.route.split('->')[1]}} </div>
+        </div>
+        <div>
+            <span>Abholung:</span>
+            <div>{{ts.transfer.date}} </div>
+        </div>
+        <div>
+            <span>Um:</span>
+            <div>{{ts.transfer.pick_up_time}} </div>
+        </div>
+        <div>
+            <span>Personenanzahl:</span>
+            <div>{{ts.transfer.number_of_passengers}} </div>
+        </div>
+    </div>
+    <div class="vehicles">
+        <div *ngFor="let class of vehicleClasses; let i=index">
+            <div class="autoInfo" *ngIf="checkCapacityWithPassengersNumber(class.vehicle_type)">
+                <div class="subInfo">
+                    <span>{{class.class_name}} {{class.vehicle_type}}</span>
+                    <div>
+                        <img src="../../assets/img/user.png">
+                        <span>x{{class.capacity}}</span>
+                    </div>
+                </div>
+                <img *ngIf="class.class_name==='economy' && class.vehicle_type==='sedan'"
+                    src="../../assets/img/economy_pkw.png">
+                <img *ngIf="class.class_name==='economy' && class.vehicle_type==='van'"
+                    src="../../assets/img/economy_van.png">
+                <img *ngIf="class.class_name==='business' && class.vehicle_type==='sedan'"
+                    src="../../assets/img/business_pkw.png">
+                <img *ngIf="class.class_name==='business' && class.vehicle_type==='van'"
+                    src="../../assets/img/business_van.png">
+                <div class="priceDiv">
+                    <b><span class="price">{{prices[i]}} €</span></b>
+                    <button (click)="addFareAndClass(prices[i],class.id)" mat-button>Buchen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="ts.transfer.fare&&!signedIn" class="authApps">
+        <app-sign-in *ngIf="!signUp"></app-sign-in>
+        <span *ngIf="!signUp">oder</span>
+        <button (click)="openSignUp()" mat-button *ngIf="!signUp">Registrieren</button>
+        <app-signup *ngIf="signUp" (signUpComplete)="onSignUpComplete()"></app-signup>
+    </div>
+</div>

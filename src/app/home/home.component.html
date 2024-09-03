@@ -1,16 +1,66 @@
 <div class="wrapper">
-    <header>
-        <span>{{us.loggedUser}}</span>
-    </header>
-    <mat-drawer-container class="example-container">
-        <mat-drawer mode="side" opened>
-            <ng-container *ngFor="let item of menuButtons">
-                <button (click)="ll.loadForm(item) " mat-button>{{item}}</button>
-            </ng-container>
-        </mat-drawer>
-        <mat-drawer-content>
-            <ng-template #formComponent></ng-template>
-        </mat-drawer-content>
-    </mat-drawer-container>
+    <img src="../../assets/img/worldtransfer_headerimage.webp">
+    <form [formGroup]="transferForm" class="transferForm" (ngSubmit)="onSubmit()">
+        <div class="destination">
+            <span class="error"
+                *ngIf="ds.errorSameDepartureDestination!==''">{{ds.errorSameDepartureDestination}}</span>
+            <div class="formSubdiv">
+                <div class="addressInputWidth">
+                    <span>Wo möchten Sie abgeholt werden?</span>
+                    <mat-form-field>
+                        <mat-select formControlName="departurePlace" (selectionChange)="ds.onDepartureChange($event)">
+                            <mat-option *ngFor="let address of addresses"
+                                value="{{address.street}}, {{address.postal_code}}, {{address.city}}">{{address.street}},
+                                {{address.postal_code}}, {{address.city}};
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="addressInputWidth">
+                    <span>Wohin dürfen wir Sie fahren?</span>
+                    <mat-form-field>
+                        <mat-select formControlName="arrivalPlace" (selectionChange)="ds.onArrivalChange($event)">
+                            <mat-option *ngFor="let address of addresses"
+                                value="{{address.street}}, {{address.postal_code}}, {{address.city}}">
+                                {{address.street}},
+                                {{address.postal_code}}, {{address.city}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div class="formSubdiv">
+            <div>
+                <span>Wann dürfen wir Sie abholen?</span>
+                <mat-form-field class="example-full-width">
+                    <input formControlName="pickupDate" [min]="minDate" matInput [matDatepicker]="picker">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <span class="invis">Wann dürfen wir Sie abholen?</span>
+                <mat-form-field class="example-full-width">
+                    <mat-label></mat-label>
+                    <input matInput formControlName="pickupTime" type="time">
+                </mat-form-field>
+            </div>
+
+            <div>
+                <span>Personen 1-7</span>
+                <mat-form-field>
+                    <mat-select formControlName="numberOfPeople">
+                        <mat-option *ngFor="let number of seatNumbers" value="{{number}}">{{number}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <button mat-button type="submit" class="accept-form">Festpreis abfragen</button>
+        </div>
+    </form>
+
 
 </div>

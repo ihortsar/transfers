@@ -1,0 +1,17 @@
+form {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+}
+
+.birthdayWidth {
+    width: 84%;
+}
+
+button {
+    background-color: rgb(127, 19, 68) !important;
+    cursor: pointer;
+    color: white !important;
+}

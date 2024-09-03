@@ -1,1 +1,15 @@
-<router-outlet></router-outlet>
+<router-outlet>
+    <header>
+        <span *ngIf="us.getDataInLocalStorage('currentUser')">Hallo,
+            {{us.getDataInLocalStorage('currentUser').name}}</span>
+        <span *ngIf="!us.getDataInLocalStorage('currentUser')">Hallo, Gast</span>
+        <div>
+            <button *ngIf="router.url!=='/'&&router.url!=='/home'" class="newTransferButton"
+                (click)="backToNewTransfer()" mat-button>Neuer Transfer</button>
+            <button *ngIf="us.getDataInLocalStorage('currentUser')&&router.url!=='/users-transfers'"
+                class="newTransferButton" [routerLink]="['/users-transfers']" mat-button>Ihre Transfers</button>
+            <button *ngIf="us.getDataInLocalStorage('currentUser')" class="newTransferButton logout" (click)="logout()"
+                mat-button>Logout</button>
+        </div>
+    </header>
+</router-outlet>
